@@ -1,3 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..500;1,300..500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+  }
+}
+
+/* Enforce max 500 font weight across the entire application */
+@layer utilities {
+  .font-semibold,
+  .font-bold,
+  .font-extrabold,
+  .font-black,
+  .font-medium {
+    font-weight: 500 !important;
+  }
+}
+
+/* Vercel-style Cubic Bezier Easing Utilities */
+.ease-vercel {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Vercel Shimmering Metallic Animation */
+@keyframes vercelShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #a1a1aa 25%,
+    #ffffff 50%,
+    #818cf8 75%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: vercelShimmer 5s linear infinite;
+}
+
+/* Vercel Laser Beam Sweep Animation */
+@keyframes laserSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-laser {
+  animation: laserSweep 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* Vercel Page Reveal Animation */
+@keyframes vercelReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-vercel-reveal {
+  animation: vercelReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

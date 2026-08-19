@@ -1,5 +1,5 @@
 import conf from '../conf/conf.js';
-import { Client, ID, Databases, Storage, Query } from "appwrite";
+import { Client, ID, Databases, Storage, Query, Permission, Role } from "appwrite";
 
 export class Service{
     client = new Client();
@@ -26,10 +26,15 @@ export class Service{
                     featuredImage,
                     status,
                     userId,
-                }
+                },
+                [
+                    Permission.read(Role.any()),
+                    Permission.update(Role.user(userId)),
+                    Permission.delete(Role.user(userId)),
+                ]
             )
         } catch (error) {
-            console.log("Appwrite serive :: createPost :: error", error);
+            console.log("Appwrite service :: createPost :: error", error);
         }
     }
 
@@ -86,13 +91,19 @@ export class Service{
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                queries,
-                
-
+                queries
             )
         } catch (error) {
-            console.log("Appwrite serive :: getPosts :: error", error);
-            return false
+            console.log("Appwrite service :: getPosts :: error, trying unqueried fallback", error);
+            try {
+                return await this.databases.listDocuments(
+                    conf.appwriteDatabaseId,
+                    conf.appwriteCollectionId
+                )
+            } catch (err) {
+                console.log("Appwrite service :: getPosts :: fallback error", err);
+                return false;
+            }
         }
     }
 
@@ -103,10 +114,13 @@ export class Service{
             return await this.bucket.createFile(
                 conf.appwriteBucketId,
                 ID.unique(),
-                file
+                file,
+                [
+                    Permission.read(Role.any())
+                ]
             )
         } catch (error) {
-            console.log("Appwrite serive :: uploadFile :: error", error);
+            console.log("Appwrite service :: uploadFile :: error", error);
             return false
         }
     }
@@ -125,10 +139,31 @@ export class Service{
     }
 
     getFilePreview(fileId){
-        return this.bucket.getFilePreview(
-            conf.appwriteBucketId,
-            fileId
-        )
+        if (!fileId) return "";
+        try {
+            const res = this.bucket.getFilePreview(
+                conf.appwriteBucketId,
+                fileId
+            );
+            return typeof res === 'string' ? res : (res?.href || res?.toString() || "");
+        } catch (error) {
+            console.log("Appwrite service :: getFilePreview :: error", error);
+            return "";
+        }
+    }
+
+    getFileView(fileId){
+        if (!fileId) return "";
+        try {
+            const res = this.bucket.getFileView(
+                conf.appwriteBucketId,
+                fileId
+            );
+            return typeof res === 'string' ? res : (res?.href || res?.toString() || "");
+        } catch (error) {
+            console.log("Appwrite service :: getFileView :: error", error);
+            return "";
+        }
     }
 }
 

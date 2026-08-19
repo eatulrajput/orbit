@@ -37,10 +37,23 @@ export class AuthService {
     }
 
     async getCurrentUser() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const secret = urlParams.get('secret');
+        const userId = urlParams.get('userId');
+
+        if (secret && userId) {
+            try {
+                await this.account.updateMagicURLSession(userId, secret);
+                return await this.account.get();
+            } catch (err) {
+                console.log("Appwrite service :: updateMagicURLSession error", err);
+            }
+        }
+
         try {
             return await this.account.get();
         } catch (error) {
-            console.log("Appwrite serive :: getCurrentUser :: error", error);
+            console.log("Appwrite service :: getCurrentUser :: error", error);
         }
 
         return null;
@@ -52,6 +65,19 @@ export class AuthService {
             await this.account.deleteSessions();
         } catch (error) {
             console.log("Appwrite serive :: logout :: error", error);
+        }
+    }
+
+    async sendMagicLink(email) {
+        try {
+            return await this.account.createMagicURLSession(
+                ID.unique(),
+                email,
+                `${window.location.origin}/dashboard`
+            );
+        } catch (error) {
+            console.log("Appwrite service :: sendMagicLink :: error", error);
+            throw error;
         }
     }
 }
