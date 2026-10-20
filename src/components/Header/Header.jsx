@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Logo, LogoutBtn } from '../index'
+import { Container, Logo, LogoutBtn, BetaTag } from '../index'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -63,10 +63,11 @@ function Header() {
       <Container>
         <nav className="flex items-center justify-between h-16">
           
-          {/* Logo Brand */}
+          {/* Logo Brand & Eye-Catching Modular Beta Tag */}
           <div className="flex items-center">
-            <Link to="/">
+            <Link to="/" className="flex items-center gap-2.5 group">
               <Logo />
+              <BetaTag />
             </Link>
           </div>
 
