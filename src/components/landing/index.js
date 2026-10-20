@@ -1,0 +1,6 @@
+export { default as HeroSection } from './HeroSection'
+export { default as HeroMockup } from './HeroMockup'
+export { default as StatsBar } from './StatsBar'
+export { default as BentoFeatures } from './BentoFeatures'
+export { default as FeaturedPosts } from './FeaturedPosts'
+export { default as FinalCTA } from './FinalCTA'
