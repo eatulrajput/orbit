@@ -12,11 +12,13 @@ import PostForm from "./post-form/PostForm";
 import PostCard from "./PostCard";
 import AuthLayout from "./AuthLayout";
 import Input from "./Input";
+import BetaTag from "./BetaTag";
 export {
     Header,
     Footer,
     Container,
     Logo,
+    BetaTag,
     LogoutBtn,
     RTE,
     Signup,

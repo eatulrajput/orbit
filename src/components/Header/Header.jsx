@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Logo, LogoutBtn } from '../index'
+import { Container, Logo, LogoutBtn, BetaTag } from '../index'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -63,33 +63,36 @@ function Header() {
       <Container>
         <nav className="flex items-center justify-between h-16">
           
-          {/* Logo Brand */}
+          {/* Logo Brand & Eye-Catching Modular Beta Tag */}
           <div className="flex items-center">
-            <Link to="/">
+            <Link to="/" className="flex items-center gap-2.5 group">
               <Logo />
+              <BetaTag />
             </Link>
           </div>
 
           {/* Desktop Navigation Links */}
-          <ul className="hidden md:flex items-center gap-1 bg-slate-900/90 border border-slate-800/80 p-1.5 rounded-2xl shadow-inner">
-            {navItems.map((item) =>
-              item.active ? (
-                <li key={item.name}>
-                  <button
-                    onClick={() => navigate(item.slug)}
-                    className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl transition-all duration-500 ease-in-out cursor-pointer ${
-                      isActiveRoute(item.slug)
-                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                        : 'text-slate-400 hover:text-white hover:bg-slate-800/80'
-                    }`}
-                  >
-                    {item.icon}
-                    {item.name}
-                  </button>
-                </li>
-              ) : null
-            )}
-          </ul>
+          {navItems.some((item) => item.active) && (
+            <ul className="hidden md:flex items-center gap-1 bg-slate-900/90 border border-slate-800/80 p-1.5 rounded-2xl shadow-inner">
+              {navItems.map((item) =>
+                item.active ? (
+                  <li key={item.name}>
+                    <button
+                      onClick={() => navigate(item.slug)}
+                      className={`flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-xl transition-all duration-500 ease-in-out cursor-pointer ${
+                        isActiveRoute(item.slug)
+                          ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                          : 'text-slate-400 hover:text-white hover:bg-slate-800/80'
+                      }`}
+                    >
+                      {item.icon}
+                      {item.name}
+                    </button>
+                  </li>
+                ) : null
+              )}
+            </ul>
+          )}
 
           {/* Desktop Action Buttons */}
           <div className="hidden md:flex items-center gap-3">

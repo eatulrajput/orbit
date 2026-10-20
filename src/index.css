@@ -83,3 +83,67 @@
 .animate-vercel-reveal {
   animation: vercelReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Beta Tag Shiver Animation (subtle periodic micro-tremor) */
+@keyframes betaShiver {
+  0%, 82%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  84% {
+    transform: translate(-1.5px, 0.5px) rotate(-2deg);
+  }
+  86% {
+    transform: translate(1.5px, -0.5px) rotate(2deg);
+  }
+  88% {
+    transform: translate(-1.5px, -0.5px) rotate(-1.5deg);
+  }
+  90% {
+    transform: translate(1.5px, 0.5px) rotate(1.5deg);
+  }
+  92% {
+    transform: translate(-1px, 0.5px) rotate(-1deg);
+  }
+  94% {
+    transform: translate(1px, -0.5px) rotate(1deg);
+  }
+  96% {
+    transform: translate(-0.5px, 0) rotate(-0.5deg);
+  }
+  98% {
+    transform: translate(0.5px, 0) rotate(0.5deg);
+  }
+}
+
+.animate-shiver {
+  animation: betaShiver 3s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Cosmic Shimmer Gradient Animation for Beta Text */
+@keyframes cosmicShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.beta-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #818cf8 0%,
+    #c084fc 25%,
+    #f472b6 45%,
+    #ffffff 55%,
+    #c084fc 75%,
+    #818cf8 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: cosmicShimmer 3s linear infinite;
+}
